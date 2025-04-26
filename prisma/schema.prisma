@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relations
+  subscription Subscription?
+  agents       UserAgent[]
+}
+
+model Subscription {
+  id        String    @id @default(uuid())
+  userId    String    @unique
+  stripePriceId    String?
+  stripeCustomerId String?
+  stripeSubscriptionId String?
+  status    String    // 'active', 'canceled', 'past_due', etc.
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Agent {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  apiEndpoint String
+  apiKey      String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  userAgents  UserAgent[]
+}
+
+model UserAgent {
+  id        String    @id @default(uuid())
+  userId    String
+  agentId   String
+  settings  Json?     // Pour stocker des configurations personnalisées
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent     Agent     @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, agentId])
+}
