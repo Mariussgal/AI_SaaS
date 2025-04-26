@@ -1,8 +1,14 @@
 "use client";
 
+import { useEffect, useState } from 'react';
+
 export default function PaymentSuccess() {
-  const params = new URLSearchParams(window.location.search);
-  const amount = params.get('amount') || '0.00';
+  const [amount, setAmount] = useState('0.00');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setAmount(params.get('amount') || '0.00');
+  }, []);
 
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-blue-500 to-purple-500">
