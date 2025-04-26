@@ -1,0 +1,10 @@
+[lcl-host]
+realm-apid = 'localhost'
+
+[org]
+apid = 'mariussgal'
+
+[service]
+apid = 'saas'
+category = 'javascript'
+cert-style = 'acme'
