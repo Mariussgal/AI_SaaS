@@ -1,39 +1,66 @@
 "use client";
 
-import CheckoutPage from "../components/CheckoutPage";
-import convertToSubcurrency from "../lib/convertToSubcurrency";
-import { Elements } from "@stripe/react-stripe-js";
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import Pricing from "@/components/Pricing";
+import SubscriptionStatus from "@/components/SubscriptionStatus";
+import ManageSubscriptionButton from "@/components/ManageSubscriptionButton";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined");
 }
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-
 export default function Home() {
-  const amount = 10.99;
+  const { isSignedIn, isLoaded } = useUser();
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSubscriptionStatus() {
+      if (isSignedIn) {
+        try {
+          const response = await fetch('/api/subscription/status');
+          const data = await response.json();
+          setSubscriptionStatus(data.status);
+        } catch (error) {
+          console.error('Failed to fetch subscription status:', error);
+        }
+      }
+      setIsLoading(false);
+    }
+
+    if (isLoaded) {
+      fetchSubscriptionStatus();
+    }
+  }, [isSignedIn, isLoaded]);
 
   return (
-    <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-gradient-to-tr from-blue-500 to-purple-500">
-      <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2">Nexya</h1>
-        <h2 className="text-2xl">
-          has requested
-          <span className="font-bold"> ${amount}</span>
-        </h2>
-      </div>
+    <Elements stripe={stripePromise}>
+      <main className="max-w-6xl mx-auto p-10">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-extrabold mb-4">Nexya</h1>
+          <p className="text-xl text-gray-600">
+            Choose a subscription plan that suits you
+          </p>
+        </div>
 
-      <Elements
-        stripe={stripePromise}
-        options={{
-          mode: "payment",
-          amount: convertToSubcurrency(amount),
-          currency: "usd",
-        }}
-      >
-        <CheckoutPage amount={amount} />
-      </Elements>
-    </main>
+        {isSignedIn && !isLoading && (
+          <div className="mb-8">
+            <SubscriptionStatus subscription={subscriptionStatus ? { status: subscriptionStatus, currentPeriodEnd: null }: null }/>
+            
+            {subscriptionStatus === 'active' && (
+              <div className="mt-4">
+                <ManageSubscriptionButton />
+              </div>
+            )}
+          </div>
+        )}
+
+        <Pricing />
+      </main>
+    </Elements>
   );
 }
