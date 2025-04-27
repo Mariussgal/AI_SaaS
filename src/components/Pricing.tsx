@@ -63,20 +63,31 @@ const Pricing: React.FC = () => {
         }
 
     setIsLoading(true);
-    
+
     try {
-      const response = await axios.post('/api/create-checkout-session', {
-        priceId: plan.priceId,
-        email: user?.primaryEmailAddress?.emailAddress
-      });
-      
-      window.location.href = response.data.checkoutUrl;
-    } catch (error) {
-      console.error('Error creating checkout session:', error);
-      alert('Something went wrong. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+        console.log('Calling checkout API with:', { priceId: plan.priceId, email: user?.primaryEmailAddress?.emailAddress });
+        const response = await axios.post('/api/create-checkout-session', {
+          priceId: plan.priceId,
+          email: user?.primaryEmailAddress?.emailAddress
+        });
+        
+        console.log('API response:', response.data);
+        
+        if (response.data.checkoutUrl) {
+          console.log('Redirecting to:', response.data.checkoutUrl);
+          window.location.href = response.data.checkoutUrl;
+        } else {
+          console.error('No checkoutUrl in response:', response.data);
+          alert('Error: No checkout URL returned from API');
+        }
+      } catch (error) {
+        console.error('Error creating checkout session:', error);
+        if (axios.isAxiosError(error)) {
+          console.error('Response status:', error.response?.status);
+          console.error('Response data:', error.response?.data);
+        }
+        alert('Something went wrong. Please try again.');
+      }
   };
 
   return (
