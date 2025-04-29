@@ -118,6 +118,7 @@
                     linear-gradient(90deg, rgba(86, 70, 252, 0.075) 1px, transparent 1px);
   background-size: 30px 30px;
   background-position: center center;
+  background-attachment: fixed;
 }
 
 @keyframes folder-hover {

@@ -110,7 +110,8 @@ const Pricing: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F0F1A] text-white bg-grid-pattern">
+    
+    <div className=" bg-[#0F0F1A] text-white bg-grid-pattern">
       {/* Hero section */}
       <section className="relative px-4 pt-24 pb-16 md:px-6 lg:pt-32 lg:pb-24 max-w-6xl mx-auto">
         <div className="text-center max-w-3xl mx-auto relative z-10">
