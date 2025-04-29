@@ -112,6 +112,30 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.bg-grid-pattern {
+  background-color: #0F0F1A;
+  background-image: linear-gradient(rgba(86, 70, 252, 0.075) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(86, 70, 252, 0.075) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+}
+
+@keyframes folder-hover {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.folder-hover:hover {
+  animation: folder-hover 0.3s ease-in-out;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -10,6 +10,8 @@ import {
 import { Geist, Geist_Mono } from 'next/font/google'
 import Link from 'next/link'
 import './globals.css'
+import Footer from '@/components/Footer';
+import MobileMenu from '@/components/MobileMenu';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,31 +36,50 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <header className="flex justify-between items-center p-4 border-b h-16">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0F0F1A]`}>
+          <header className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center p-4 h-16 bg-transparent">
             <div className="flex items-center gap-6">
-              <Link href="/" className="text-xl font-bold">AI SaaS</Link>
-              <nav className="hidden md:flex gap-4">
+              <Link href="/" className="text-xl font-bold text-white">AI SaaS</Link>
+              <nav className="hidden md:flex gap-6">
                 <SignedIn>
-                  <Link href="/dashboard" className="hover:text-primary">Dashboard</Link>
-                  <Link href="/agents" className="hover:text-primary">Agents</Link>
-                  <Link href="/pricing" className="hover:text-primary">Pricing</Link>
+                  <Link href="/dashboard" className="text-white/80 hover:text-white font-medium transition-colors">Dashboard</Link>
+                  <Link href="/agents" className="text-white/80 hover:text-white font-medium transition-colors">Agents</Link>
+                  <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Pricing</Link>
+                  <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Help</Link>
                 </SignedIn>
+                <SignedOut>
+                  <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Pricing</Link>
+                  <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Help</Link>
+                </SignedOut>
               </nav>
             </div>
-            <div className="flex items-center gap-4">
+            
+            <div className="hidden md:flex items-center gap-4">
               <SignedOut>
-                <SignInButton />
-                <SignUpButton />
+                <SignInButton mode="modal">
+                  <button className="px-4 py-2 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-md hover:from-indigo-500 hover:to-purple-500 transition-colors">
+                    Sign Up
+                  </button>
+                </SignUpButton>
               </SignedOut>
               <SignedIn>
-                <UserButton/>
+                <UserButton />
               </SignedIn>
+            </div>
+            
+            <div className="md:hidden">
+              <MobileMenu />
             </div>
           </header>
           <main>
             {children}
           </main>
+          <Footer/>
         </body>
       </html>
     </ClerkProvider>
