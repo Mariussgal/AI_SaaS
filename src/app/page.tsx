@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useUser, useClerk } from '@clerk/nextjs';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Home() {
-  const { isSignedIn, isLoaded } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { isSignedIn, isLoaded } = useUser();
+  const { openSignIn } = useClerk();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +17,16 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleAuthAction = () => {
+    if (!isSignedIn) {
+      openSignIn({
+        redirectUrl: `${window.location.origin}/dashboard`
+      });
+    } else {
+      window.location.href = '/dashboard';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0F0F1A] text-white bg-grid-pattern">
@@ -43,12 +53,12 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href={isSignedIn ? '/dashboard' : '/sign-up'}
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium transition-all duration-200 transform hover:scale-105"
-            >
-              {isSignedIn ? 'Accéder au Dashboard' : 'Je réserve ma place'}
-            </Link>
+            <button
+              onClick={handleAuthAction}
+                  className="px-8 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium transition-all duration-200 transform hover:scale-105"
+>
+                  {isSignedIn ? 'Accéder au Dashboard' : 'Je réserve ma place'}
+              </button>
 
             <Link
               href="/pricing"
@@ -92,7 +102,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Gradient Effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-indigo-600/20 blur-[100px] rounded-full"></div>
       </section>
 
@@ -268,7 +277,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Background Effect */}
           <div className="absolute right-0 bottom-0 w-64 h-64 bg-indigo-600 rounded-full filter blur-3xl opacity-20 -mr-20 -mb-20"></div>
           <div className="absolute left-1/2 top-0 w-40 h-40 bg-purple-600 rounded-full filter blur-3xl opacity-20 -ml-20 -mt-20"></div>
         </div>
