@@ -108,7 +108,7 @@ export default async function AgentsPage() {
           </h1>
           
           <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto mt-10">
-            Découvrez et activez nos agents spécialisés pour votre entreprise
+            Découvrez nos agents spécialisés pour votre entreprise
           </p>
           
 
