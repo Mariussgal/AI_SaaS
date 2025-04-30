@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useClerk } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 interface PricingPlan {
@@ -78,6 +79,7 @@ const Pricing: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user, isSignedIn } = useUser();
   const { openSignIn } = useClerk();
+  const router = useRouter();
 
   const handleSubscribe = async (plan: PricingPlan) => {
     if (!isSignedIn) {
@@ -100,10 +102,12 @@ const Pricing: React.FC = () => {
       } else {
         console.error('No checkoutUrl in response:', response.data);
         alert('Error: No checkout URL returned from API');
+        router.push('/dashboard');
       }
     } catch (error) {
       console.error('Error creating checkout session:', error);
       alert('Something went wrong. Please try again.');
+      router.push('/dashboard');
     } finally {
       setIsLoading(false);
     }

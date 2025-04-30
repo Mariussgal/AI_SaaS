@@ -3,8 +3,79 @@ import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
+import { 
+  Users, 
+  Phone, 
+  Globe, 
+  Briefcase, 
+  Scale, 
+  BarChart2, 
+  HeadsetIcon,
+  Share2
+} from 'lucide-react';
 
 const prisma = new PrismaClient();
+
+
+// Liste des agents avec leurs icônes et descriptions
+const agentsList = [
+  {
+    id: 'seo',
+    name: 'SEO',
+    icon: <Globe className="h-10 w-10" />,
+    description: 'Votre site web manque de visibilité et d\'optimisation SEO ?',
+    category: 'Marketing'
+  },
+  {
+    id: 'support',
+    name: 'Support Client',
+    icon: <HeadsetIcon className="h-10 w-10" />,
+    description: 'Vous souhaitez un service client réactif et disponible 24/7 ?',
+    category: 'Relation Client'
+  },
+  {
+    id: 'telephonie',
+    name: 'Téléphonie',
+    icon: <Phone className="h-10 w-10" />,
+    description: 'Vous souhaitez automatiser vos appels entrants et sortants ?',
+    category: 'Relation Client'
+  },
+  {
+    id: 'commercial',
+    name: 'Stratégie Commerciale',
+    icon: <Briefcase className="h-10 w-10" />,
+    description: 'Vous souhaitez automatiser votre prospection ?',
+    category: 'Ventes'
+  },
+  {
+    id: 'juridique',
+    name: 'Juridique',
+    icon: <Scale className="h-10 w-10" />,
+    description: 'Vous avez besoin de conseil juridique pour votre entreprise ?',
+    category: 'Légal'
+  },
+  {
+    id: 'data',
+    name: 'Analyse de Données',
+    icon: <BarChart2 className="h-10 w-10" />,
+    description: 'Besoin d\'un bras droit pour analyser vos données ?',
+    category: 'Données'
+  },
+  {
+    id: 'recrutement',
+    name: 'Recrutement',
+    icon: <Users className="h-10 w-10" />,
+    description: 'Vous souhaitez recruter les meilleurs talents ?',
+    category: 'RH'
+  },
+  {
+    id: 'social',
+    name: 'Social Media',
+    icon: <Share2 className="h-10 w-10" />,
+    description: 'Vous souhaitez automatiser la gestion de vos réseaux sociaux ?',
+    category: 'Marketing'
+  },
+];
 
 export default async function AgentsPage() {
   const { userId } = await auth();
@@ -26,49 +97,30 @@ export default async function AgentsPage() {
   });
   
   const hasActiveSubscription = user?.subscription?.status === 'active';
-  
-  const availableAgents = await prisma.agent.findMany({
-    where: {
-      isActive: true
-    }
-  });
-  
-  const groupedAgents = availableAgents.reduce((acc, agent) => {
-    const firstLetter = agent.name.charAt(0).toUpperCase();
-    if (!acc[firstLetter]) {
-      acc[firstLetter] = [];
-    }
-    acc[firstLetter].push(agent);
-    return acc;
-  }, {} as Record<string, typeof availableAgents>);
-  
-  const categories = Object.keys(groupedAgents).sort();
-  
+
   return (
-    <div className="container mx-auto p-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold">AI Agents</h1>
-          <p className="text-gray-600">Discover and use our specialized AI agents</p>
+    <div className="min-h-screen bg-[#0F0F1A] text-white bg-grid-pattern">
+      {/* Hero Section */}
+      <section className="relative px-4 pt-24 pb-12 md:px-6 lg:pt-28 lg:pb-16 max-w-6xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+            Votre équipe d'<span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">assistants IA</span>, prête à automatiser votre quotidien.
+          </h1>
+          
+          <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto mt-10">
+            Découvrez et activez nos agents spécialisés pour votre entreprise
+          </p>
+          
+
         </div>
         
-        {!hasActiveSubscription && (
-          <div className="mt-4 md:mt-0">
-            <Link 
-              href="/pricing" 
-              className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-            >
-              Upgrade to Premium
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-        )}
-      </div>
-      
+        {/* Gradient effect */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-indigo-600/20 blur-[100px] rounded-full"></div>
+      </section>
+
+      {/* Message de mise à niveau si pas de souscription active */}
       {!hasActiveSubscription && (
-        <div className="bg-yellow-50 p-4 rounded-lg mb-6 border border-yellow-200">
+        <div className="bg-yellow-50 text-yellow-800 p-4 rounded-lg mb-8 max-w-6xl mx-auto">
           <div className="flex items-start">
             <div className="flex-shrink-0">
               <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -76,111 +128,89 @@ export default async function AgentsPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-yellow-800">Premium Feature</h3>
-              <p className="text-sm text-yellow-700 mt-1">
-                To access all agents and features, you need an active subscription.
+              <h3 className="text-sm font-medium">Accès limité</h3>
+              <p className="mt-1 text-sm">
+                Pour accéder à tous nos agents et fonctionnalités, vous devez avoir un abonnement actif.
               </p>
               <div className="mt-2">
                 <Link 
                   href="/pricing" 
                   className="text-sm font-medium text-yellow-800 hover:text-yellow-600 underline"
                 >
-                  View plans
+                  Voir les offres
                 </Link>
               </div>
             </div>
           </div>
         </div>
       )}
-      
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-          <h2 className="text-xl font-semibold">All Agents</h2>
-          
-          {categories.length > 1 && (
-            <div className="mt-3 sm:mt-0">
-              <nav className="flex space-x-1 overflow-x-auto py-1" aria-label="Categories">
-                {categories.map((category) => (
-                  <a 
-                    key={category}
-                    href={`#category-${category}`}
-                    className="px-3 py-1.5 text-sm font-medium rounded-md hover:bg-gray-100"
-                  >
-                    {category}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          )}
-        </div>
-        
-        <div className="space-y-8">
-          {categories.map((category) => (
-            <div key={category} id={`category-${category}`}>
-              <h3 className="text-lg font-medium mb-4 sticky top-0 bg-white py-2 border-b">{category}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {groupedAgents[category].map((agent) => {
-                  const isAgentEnabled = user?.agents.some(ua => ua.agentId === agent.id);
-                  const isPremiumAgent = !isAgentEnabled && !hasActiveSubscription;
-                  
-                  return (
-                    <div 
-                      key={agent.id} 
-                      className={`border rounded-lg overflow-hidden shadow-sm transition-all hover:shadow-md ${
-                        isPremiumAgent ? 'opacity-70' : ''
-                      }`}
-                    >
-                      <div className="p-5 border-b">
-                        <div className="flex items-start justify-between">
-                          <h2 className="text-xl font-semibold">{agent.name}</h2>
-                          {isPremiumAgent && (
-                            <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                              Premium
-                            </span>
-                          )}
-                        </div>
-                        
-                        <p className="text-gray-600 mt-2 min-h-[3rem]">
-                          {agent.description || "No description available."}
-                        </p>
-                      </div>
-                      
-                      <div className="p-5 bg-gray-50">
-                        <div className="flex items-center mb-4">
-                          <span className={`inline-block w-3 h-3 rounded-full mr-2 ${isAgentEnabled ? 'bg-green-500' : 'bg-gray-300'}`}></span>
-                          <span className="text-sm">{isAgentEnabled ? 'Active' : 'Inactive'}</span>
-                        </div>
-                        
-                        <div>
-                          {isAgentEnabled ? (
-                            <Link
-                              href={`/agents/${agent.id}`}
-                              className="w-full px-4 py-2 bg-primary text-white rounded-md inline-block text-center hover:bg-primary/90 transition-colors"
-                            >
-                              Use Agent
-                            </Link>
-                          ) : (
-                            <button
-                              disabled={isPremiumAgent}
-                              className={`w-full px-4 py-2 rounded-md inline-block text-center ${
-                                !isPremiumAgent 
-                                  ? 'bg-primary text-white hover:bg-primary/90' 
-                                  : 'bg-gray-300 text-gray-600 cursor-not-allowed'
-                              }`}
-                            >
-                              {isPremiumAgent ? 'Subscription Required' : 'Activate Agent'}
-                            </button>
-                          )}
-                        </div>
-                      </div>
+
+      {/* Grille d'agents */}
+      <section className="px-4 pb-16 md:px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {agentsList.map((agent) => {
+            // On simule l'état actif pour certains agents
+            const isAgentActive = agent.id === 'seo' || agent.id === 'support';
+            const isPremiumAgent = !isAgentActive && !hasActiveSubscription;
+            
+            return (
+              <div 
+                key={agent.id}
+                className={`bg-black border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:scale-[1.02] ${
+                  isPremiumAgent ? 'opacity-80' : ''
+                }`}
+              >
+                <div className="p-6 flex flex-col h-full">
+                  <div className="flex justify-between mb-4">
+                    <div className={`p-4 rounded-full ${getColorForCategory(agent.category)}`}>
+                      {agent.icon}
                     </div>
-                  );
-                })}
+                    
+                    {isPremiumAgent && (
+                      <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded h-fit">
+                        Premium
+                      </span>
+                    )}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-2">{agent.name}</h3>
+                  <p className="text-gray-400 mb-6 flex-grow">{agent.description}</p>
+                  
+                  <div className="mt-auto">
+
+                      <Link className="mt-6 block text-center w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-lg font-medium transition-colors"
+                            href="/dashboard"
+                          >
+                        Plus de détails 
+                      </Link>
+
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      </div>
+      </section>
     </div>
   );
+}
+
+// Fonction pour attribuer une couleur de fond en fonction de la catégorie
+function getColorForCategory(category: string) {
+  switch (category) {
+    case 'Marketing':
+      return 'bg-purple-500/20 text-purple-400';
+    case 'Relation Client':
+      return 'bg-blue-500/20 text-blue-400';
+    case 'Ventes':
+      return 'bg-green-500/20 text-green-400';
+    case 'Légal':
+      return 'bg-orange-500/20 text-orange-400';
+    case 'Données':
+      return 'bg-cyan-500/20 text-cyan-400';
+    case 'RH':
+      return 'bg-pink-500/20 text-pink-400';
+    default:
+      return 'bg-indigo-500/20 text-indigo-400';
+  }
 }
