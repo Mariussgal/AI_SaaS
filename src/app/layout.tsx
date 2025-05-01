@@ -44,13 +44,13 @@ export default function RootLayout({
                 <SignedIn>
                   <Link href="/dashboard" className="text-white/80 hover:text-white font-medium transition-colors">Dashboard</Link>
                   <Link href="/agents" className="text-white/80 hover:text-white font-medium transition-colors">Agents</Link>
-                  <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Pricing</Link>
-                  <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Help</Link>
+                  <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Tarifs</Link>
+                  <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Aide</Link>
                 </SignedIn>
                 <SignedOut>
                   <Link href="/agents" className="text-white/80 hover:text-white font-medium transition-colors">Agents</Link>
-                  <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Pricing</Link>
-                  <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Help</Link>
+                  <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Tarifs</Link>
+                  <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Aide</Link>
                 </SignedOut>
               </nav>
             </div>
