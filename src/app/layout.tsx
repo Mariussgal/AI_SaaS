@@ -39,7 +39,7 @@ export default function RootLayout({
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0F0F1A]`}>
           <header className="absolute top-0 left-0 right-0 z-50 flex justify-between items-center p-4 h-16 bg-transparent">
             <div className="flex items-center gap-6">
-              <Link href="/" className="text-xl font-bold text-white">AI SaaS</Link>
+              <Link href="/" className="text-xl font-bold text-white">NEXYA.ai</Link>
               <nav className="hidden md:flex gap-6">
                 <SignedIn>
                   <Link href="/dashboard" className="text-white/80 hover:text-white font-medium transition-colors">Dashboard</Link>

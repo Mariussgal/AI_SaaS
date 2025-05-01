@@ -47,10 +47,8 @@ const MobileMenu = () => {
         <div className="flex flex-col h-full">
           <div className="flex justify-between items-center p-4 border-b border-gray-800">
             <Link href="/" className="text-xl font-bold text-white flex items-center" onClick={() => setIsOpen(false)}>
-              <div className="h-10 w-10 mr-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-md flex items-center justify-center text-white">
-                AI
-              </div>
-              <span>SaaS</span>
+
+              <span>NEXYA</span>
             </Link>
             <div>
               <SignedIn>

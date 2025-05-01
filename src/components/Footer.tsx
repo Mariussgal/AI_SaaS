@@ -10,12 +10,9 @@ const Footer = () => {
         <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           <div className="flex flex-col">
             <Link href="/" className="text-white font-bold text-2xl mb-4 flex items-center">
-              <div className="h-10 w-10 mr-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-md flex items-center justify-center text-white">
-                AI
-              </div>
-              <span>SaaS</span>
+              <span>NEXYA</span>
             </Link>
-            <p className="text-gray-400 text-sm">© 2025 AI SaaS</p>
+            <p className="text-gray-400 text-sm">© 2025 NEXYA</p>
             <p className="text-gray-400 text-sm">Tous droits réservés</p>
             
             <div className="mt-auto pt-4">
@@ -230,7 +227,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-500 text-sm mb-4 md:mb-0 text-center md:text-left">
-            © 2025 AI SaaS. Tous droits réservés.
+            © 2025 NEXYA. Tous droits réservés.
           </div>
           <div className="flex space-x-4">
             <button className="flex items-center text-gray-400 hover:text-white">
