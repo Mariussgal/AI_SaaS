@@ -179,7 +179,7 @@ import React from 'react';
                    <div className="mt-auto">
  
                        <Link className="mt-6 block text-center w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-lg font-medium transition-colors"
-                             href="/dashboard"
+                             href={`/agents/${agent.id}`}
                            >
                          Plus de détails 
                        </Link>
