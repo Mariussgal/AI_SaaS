@@ -120,10 +120,8 @@ const Footer = () => {
         <div className="sm:hidden">
           <div className="mb-8">
             <Link href="/" className="text-white font-bold text-2xl mb-4 flex items-center justify-center">
-              <div className="h-10 w-10 mr-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-md flex items-center justify-center text-white">
-                AI
-              </div>
-              <span>SaaS</span>
+
+              <span>NEXYA</span>
             </Link>
             
             <div className="flex justify-center space-x-6 mt-6">
