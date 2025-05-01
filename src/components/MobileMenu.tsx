@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton,  SignInButton, SignUpButton, } from '@clerk/nextjs';
 import Link from 'next/link';
 
 const MobileMenu = () => {
@@ -106,21 +106,24 @@ const MobileMenu = () => {
                 >
                   Help
                 </Link>
+                <Link 
+                  href="/agents" 
+                  className="text-white text-xl font-medium border-b border-gray-800 pb-4"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Agents
+                </Link>
                 <div className="pt-4 flex flex-col space-y-4">
-                  <Link 
-                    href="/sign-in" 
-                    className="px-4 py-3 rounded-md text-white bg-gray-800 text-center"
-                    onClick={() => setIsOpen(false)}
-                  >
+                <SignInButton mode="modal">
+                  <button className="px-4 py-2 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors">
                     Sign In
-                  </Link>
-                  <Link 
-                    href="/sign-up" 
-                    className="px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-md text-center"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  </button>
+                </SignInButton>
+                  <SignUpButton mode="modal">
+                  <button className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-md hover:from-indigo-500 hover:to-purple-500 transition-colors">
                     Sign Up
-                  </Link>
+                  </button>
+                </SignUpButton>
                 </div>
               </SignedOut>
             </nav>
