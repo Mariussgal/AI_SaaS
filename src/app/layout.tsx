@@ -48,6 +48,7 @@ export default function RootLayout({
                   <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Help</Link>
                 </SignedIn>
                 <SignedOut>
+                  <Link href="/agents" className="text-white/80 hover:text-white font-medium transition-colors">Agents</Link>
                   <Link href="/pricing" className="text-white/80 hover:text-white font-medium transition-colors">Pricing</Link>
                   <Link href="/help" className="text-white/80 hover:text-white font-medium transition-colors">Help</Link>
                 </SignedOut>
