@@ -79,14 +79,14 @@ const MobileMenu = () => {
                   className="text-white text-xl font-medium border-b border-gray-800 pb-4"
                   onClick={() => setIsOpen(false)}
                 >
-                  Pricing
+                  Tarifs
                 </Link>
                 <Link 
                   href="/help" 
                   className="text-white text-xl font-medium border-b border-gray-800 pb-4"
                   onClick={() => setIsOpen(false)}
                 >
-                  Help
+                  Aide
                 </Link>
               </SignedIn>
               <SignedOut>
@@ -95,14 +95,14 @@ const MobileMenu = () => {
                   className="text-white text-xl font-medium border-b border-gray-800 pb-4"
                   onClick={() => setIsOpen(false)}
                 >
-                  Pricing
+                  Tarifs
                 </Link>
                 <Link 
                   href="/help" 
                   className="text-white text-xl font-medium border-b border-gray-800 pb-4"
                   onClick={() => setIsOpen(false)}
                 >
-                  Help
+                  Aide
                 </Link>
                 <Link 
                   href="/agents" 
