@@ -128,28 +128,18 @@ import React from 'react';
            {agentsList.map((agent) => {
              // On simule l'état actif pour certains agents
              const isAgentActive = agent.id === 'seo' || agent.id === 'support';
-             const isPremiumAgent = !isAgentActive && !hasActiveSubscription;
              
              return (
                <div 
                  key={agent.id}
-                 className={`bg-black border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:scale-[1.02] ${
-                   isPremiumAgent ? 'opacity-80' : ''
-                 }`}
+                 className={`bg-black border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:scale-[1.02] `}
                >
                  <div className="p-6 flex flex-col h-full">
                    <div className="flex justify-between mb-4">
                      <div className={`p-4 rounded-full ${getColorForCategory(agent.category)}`}>
                        {agent.icon}
                      </div>
-                     
-                     {isPremiumAgent && (
-                       <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded h-fit">
-                         Premium
-                       </span>
-                     )}
-                   </div>
-                   
+                    </div>
                    <h3 className="text-xl font-bold mb-2">{agent.name}</h3>
                    <p className="text-gray-400 mb-6 flex-grow">{agent.description}</p>
                    

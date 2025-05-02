@@ -59,21 +59,6 @@ export default function SupportAgentPage() {
                 <ArrowUpRight size={18} className="ml-2" />
               </Link>
             </div>
-
-            <div className="bg-[#1A1A2E] border border-gray-800 rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-4">Disponibilité</h3>
-              <div className="flex items-center mb-3">
-                <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                <span>Disponible avec tous les abonnements</span>
-              </div>
-              <Link
-                href="/pricing"
-                className="text-blue-400 hover:text-blue-300 font-medium flex items-center"
-              >
-                <span>Voir les tarifs</span>
-                <ChevronLeft size={16} className="ml-1 rotate-180" />
-              </Link>
-            </div>
           </div>
         </div>
       </section>
