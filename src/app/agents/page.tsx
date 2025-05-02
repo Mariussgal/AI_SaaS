@@ -108,19 +108,14 @@ import React from 'react';
            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
              Votre équipe d'<span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">assistants IA</span>, prête à automatiser votre quotidien.
            </h1>
-           
            <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto mt-10">
              Découvrez nos agents spécialisés pour votre entreprise
            </p>
-           
- 
          </div>
          
          {/* Gradient effect */}
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-indigo-600/20 blur-[100px] rounded-full"></div>
        </section>
- 
-
  
        {/* Grille d'agents */}
        <section className="px-4 pb-16 md:px-6 max-w-6xl mx-auto">
@@ -129,8 +124,13 @@ import React from 'react';
              return (
                <div 
                  key={agent.id}
-                 className={`bg-black border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:scale-[1.02] `}
+                 className={`relative bg-black border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:scale-[1.02] `}
                >
+                {agent.id === 'telephonie' && (
+                  <div className="absolute top-0 right-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-1 px-3 shadow-lg z-10">
+                    <p className="text-center font-medium text-sm">En développement</p>
+                  </div>
+                  )}
                  <div className="p-6 flex flex-col h-full">
                    <div className="flex justify-between mb-4">
                      <div className={`p-4 rounded-full ${getColorForCategory(agent.category)}`}>
