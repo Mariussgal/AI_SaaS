@@ -126,9 +126,6 @@ import React from 'react';
        <section className="px-4 pb-16 md:px-6 max-w-6xl mx-auto">
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
            {agentsList.map((agent) => {
-             // On simule l'état actif pour certains agents
-             const isAgentActive = agent.id === 'seo' || agent.id === 'support';
-             
              return (
                <div 
                  key={agent.id}
